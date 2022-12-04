@@ -15,7 +15,7 @@ namespace IMS.Plugins.EFCore
 
         public async Task<IEnumerable<Inventory>> GetInventoriesByName(string name)
         {
-            return await this.db.Inventories.Where(x => x.InventoryName.Contains(name) || 
+            return await this.db.Inventories.Where(x => x.InventoryName.Contains(name, StringComparison.OrdinalIgnoreCase) || 
                                                 string.IsNullOrWhiteSpace(name)).ToListAsync();
         }
     }
