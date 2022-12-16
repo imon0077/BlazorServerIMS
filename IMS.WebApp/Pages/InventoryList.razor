@@ -3,7 +3,7 @@
 @inject NavigationManager NavigationManager
 @inject IViewInventoriesByNameUseCase ViewInventoriesByNameUseCase
 
-<h3>Inventory List</h3>
+<h3>Inventory List </h3>
 <br/>
 
 <ViewInventoriesComponent OnSearchInventories="OnSearchInventories"></ViewInventoriesComponent>
@@ -25,7 +25,7 @@
                     <td>@inv.Quantity</td>
                     <td>@inv.Price.ToString("c")</td>
                     <td>
-                        <button type="button" class="btn btn-light"> Edit </button>
+                        <button type="button" class="btn btn-light" @onclick="@(()=> EditInventory(inv.InventoryId))"> Edit </button>
                     </td>
                 </tr>
             }
@@ -53,6 +53,10 @@
 
     private void AddInventory(){
         NavigationManager.NavigateTo("/addinventory");
+    }
+
+    private void EditInventory(int invId){
+        NavigationManager.NavigateTo($"/editinventory/{invId}");
     }
 
 }
