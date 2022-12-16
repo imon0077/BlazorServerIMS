@@ -11,18 +11,46 @@
         View
     </button>
 </div>
+    
+@*@if (this.DisplaySearchResult && _inventories != null && selectedInventory == null)
+{
+    <div>
+        <ul style="list-style-type:none">
+            @foreach (var inv in _inventories)
+            {
+                <li style="cursor:pointer" @onclick="@(async() => { await SelectInventory(inv); })"
+            @key="@inv.InventoryId">@inv.InventoryName</li>
+            }
+        </ul>
+    </div>
+}*@
 
 @code {
     private string inventoryNameToSearch = string.Empty;
-    //private List<Inventory> inventories = new List<Inventory>();
+    private List<Inventory> _inventories = new List<Inventory>();
+    //private Inventory? selectedInventory;
 
     [Parameter]
     public EventCallback<List<Inventory>> OnSearchInventories { get; set; }
+
+    //[Parameter]
+    //public EventCallback<Inventory> OnSelectInventory { get; set; }
+
+    //[Parameter]
+    //public bool DisplaySearchResult { get; set; } = false;
+
 
     private async Task ViewInventories(){
         var inventories = (await ViewInventoriesByNameUseCase.ExecuteAsync(inventoryNameToSearch)).ToList();
 
         await OnSearchInventories.InvokeAsync(inventories);
+        _inventories = inventories;
+        //this.selectedInventory = null;
     }
+
+    //private async Task SelectInventory(Inventory inventory){
+    //    await OnSelectInventory.InvokeAsync(inventory);
+    //    selectedInventory = inventory; 
+    //}
 
 }

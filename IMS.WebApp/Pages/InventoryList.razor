@@ -6,7 +6,10 @@
 <h3>Inventory List </h3>
 <br/>
 
-<ViewInventoriesComponent OnSearchInventories="OnSearchInventories"></ViewInventoriesComponent>
+<ViewInventoriesComponent 
+    OnSearchInventories="OnSearchInventories"></ViewInventoriesComponent>
+
+    @*DisplaySearchResult="true"*@
 
 @if (listInventories != null){    
     <table class="table">
