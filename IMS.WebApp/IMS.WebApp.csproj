@@ -20,4 +20,10 @@
     <ProjectReference Include="..\IMS.Plugins.EFCore\IMS.Plugins.EFCore.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Content Update="Controls\ViewProductsComponent.razor">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+    </Content>
+  </ItemGroup>
+
 </Project>
