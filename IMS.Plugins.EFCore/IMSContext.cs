@@ -20,6 +20,20 @@ namespace IMS.Plugins.EFCore
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            //build relatinsip
+            modelBuilder.Entity<ProductInventory>()
+               .HasKey(pi => new { pi.ProductId, pi.InventoryId });
+
+            modelBuilder.Entity<ProductInventory>()
+                .HasOne(pi => pi.Product)
+                .WithMany(pi => pi.ProductInventories)
+                .HasForeignKey(pi => pi.ProductId);
+
+            modelBuilder.Entity<ProductInventory>()
+                .HasOne(pi => pi.Inventory)
+                .WithMany(pi => pi.ProductInventories)
+                .HasForeignKey(pi => pi.InventoryId);
+
             //seeding data inventory
             modelBuilder.Entity<Inventory>().HasData(
                 new Inventory { InventoryId = 1, InventoryName = "Gas Engine", Price = 1000, Quantity = 1 },
@@ -34,6 +48,22 @@ namespace IMS.Plugins.EFCore
             modelBuilder.Entity<Product>().HasData(
                 new Product { ProductId = 1, ProductName = "Gas Car", Price = 20000, Quantity = 1 },
                 new Product { ProductId = 2, ProductName = "Electric Car", Price = 15000, Quantity = 1 }
+            );
+
+            //Seeding data for ProductInventories
+            modelBuilder.Entity<ProductInventory>().HasData(
+                new ProductInventory { ProductId = 1, InventoryId = 1, InventoryQuantity = 1 }, //engine
+                new ProductInventory { ProductId = 1, InventoryId = 2, InventoryQuantity = 1 }, //body
+                new ProductInventory { ProductId = 1, InventoryId = 3, InventoryQuantity = 4 }, //wheels
+                new ProductInventory { ProductId = 1, InventoryId = 4, InventoryQuantity = 5 } //seats
+            );
+
+            modelBuilder.Entity<ProductInventory>().HasData(
+                new ProductInventory { ProductId = 2, InventoryId = 5, InventoryQuantity = 1 }, //engine
+                new ProductInventory { ProductId = 2, InventoryId = 2, InventoryQuantity = 1 }, //body
+                new ProductInventory { ProductId = 2, InventoryId = 3, InventoryQuantity = 4 }, //wheels
+                new ProductInventory { ProductId = 2, InventoryId = 4, InventoryQuantity = 5 }, //seats
+                new ProductInventory { ProductId = 2, InventoryId = 6, InventoryQuantity = 1 } //Battery
             );
         }
     }

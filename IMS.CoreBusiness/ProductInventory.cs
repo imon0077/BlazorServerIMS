@@ -8,7 +8,7 @@ namespace IMS.CoreBusiness
 {
     public class ProductInventory
     {
-        public int Productid { get; set; }
+        public int ProductId { get; set; }
         public Product Product { get; set; } = new Product();
         
         public int InventoryId { get; set; }
