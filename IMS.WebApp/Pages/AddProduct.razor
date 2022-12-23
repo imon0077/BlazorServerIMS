@@ -28,7 +28,7 @@
             <InputNumber id="price" @bind-Value="product.Price" class="form-control"></InputNumber>
         </div>
 
-        <ProductInventoriesComponent @ref="ProductInventoriesComponent"></ProductInventoriesComponent>
+        <ProductInventoriesComponent @ref="ProductInventoriesComponent" OnInventorySelected="OnInventorySelected"></ProductInventoriesComponent>
 
         <br />
 
@@ -49,11 +49,24 @@
         product = new Product();
     }
 
-    public async Task OnValidSubmit(){
+    public async Task OnValidSubmit()
+    {
         if(this.product != null)
         {
+            this.ProductInventoriesComponent?.productInventories.ForEach(x =>
+            {
+                x.ProductId = this.product.ProductId;
+            });
+            //this.product.ProductInventories = this.ProductInventoriesComponent.productInventories;
+
             await AddProductUseCase.ExecuteAsync(product);
             NavigationManager.NavigateTo("/products");
         }
     }
+
+    private void OnInventorySelected(List<ProductInventory> productInventories)
+    {
+        this.product.ProductInventories = productInventories;
+    }
+
 }
