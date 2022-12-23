@@ -26,9 +26,9 @@
             {
                 <InventoryItemComponent item="row"></InventoryItemComponent>
                 @*<tr>
-                    <td>@inv.InventoryName</td>
-                    <td>@inv.Quantity</td>
-                    <td>@inv.Price.ToString("c")</td>
+                    <td>@row.InventoryName</td>
+                    <td>@row.Quantity</td>
+                    <td>@row.Price.ToString("c")</td>
                     <td>
                         <button type="button" class="btn btn-light" @onclick="@(()=> EditInventory(inv.InventoryId))"> Edit </button>
                     </td>

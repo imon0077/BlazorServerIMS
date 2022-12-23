@@ -12,7 +12,7 @@
     </button>
 </div>
     
-@*@if (this.DisplaySearchResult && _inventories != null && selectedInventory == null)
+@if (this.DisplaySearchResult && _inventories != null && selectedInventory == null)
 {
     <div>
         <ul style="list-style-type:none">
@@ -23,21 +23,21 @@
             }
         </ul>
     </div>
-}*@
+}
 
 @code {
     private string inventoryNameToSearch = string.Empty;
     private List<Inventory> _inventories = new List<Inventory>();
-    //private Inventory? selectedInventory;
+    private Inventory? selectedInventory;
 
     [Parameter]
     public EventCallback<List<Inventory>> OnSearchInventories { get; set; }
 
-    //[Parameter]
-    //public EventCallback<Inventory> OnSelectInventory { get; set; }
+    [Parameter]
+    public EventCallback<Inventory> OnSelectInventory { get; set; }
 
-    //[Parameter]
-    //public bool DisplaySearchResult { get; set; } = false;
+    [Parameter]
+    public bool DisplaySearchResult { get; set; } = false;
 
 
     private async Task ViewInventories(){
@@ -45,12 +45,12 @@
 
         await OnSearchInventories.InvokeAsync(inventories);
         _inventories = inventories;
-        //this.selectedInventory = null;
+        this.selectedInventory = null;
     }
 
-    //private async Task SelectInventory(Inventory inventory){
-    //    await OnSelectInventory.InvokeAsync(inventory);
-    //    selectedInventory = inventory; 
-    //}
+    private async Task SelectInventory(Inventory inventory){
+        await OnSelectInventory.InvokeAsync(inventory);
+        selectedInventory = inventory; 
+    }
 
 }
