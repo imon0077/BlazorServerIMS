@@ -26,12 +26,12 @@ namespace IMS.Plugins.EFCore
 
             modelBuilder.Entity<ProductInventory>()
                 .HasOne(pi => pi.Product)
-                .WithMany(pi => pi.ProductInventories)
+                .WithMany(p => p.ProductInventories)
                 .HasForeignKey(pi => pi.ProductId);
 
             modelBuilder.Entity<ProductInventory>()
                 .HasOne(pi => pi.Inventory)
-                .WithMany(pi => pi.ProductInventories)
+                .WithMany(i => i.ProductInventories)
                 .HasForeignKey(pi => pi.InventoryId);
 
             //seeding data inventory

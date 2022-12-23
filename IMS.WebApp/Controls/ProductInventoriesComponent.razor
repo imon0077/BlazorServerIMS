@@ -6,28 +6,49 @@
     </ViewInventoriesComponent>
 </div>
 
-@if (inventories != null && inventories.Count > 0)
+@if (productInventories != null && productInventories.Count > 0)
 {
-    <ul style="list-style-type:none">
-        @foreach (var item in inventories)
-        {
-            <li>@item.InventoryName &nbsp; <button type="button" class="btn btn-link" @onclick="@(() => RemoveItem(item))"> x </button></li>
-        }
-    </ul>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Quantity</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in productInventories)
+            {
+            <tr>
+                <td>
+                    @item.Inventory.InventoryName &nbsp;
+                </td>
+                <td>
+                    <input type="number" min="0" max="@item.Inventory.Quantity" @bind-value="item.InventoryQuantity" />
+                    </td>
+                <td>
+                    <button type="button" class="btn btn-link" @onclick="@(() => RemoveItem(item))"> x </button>
+                </td>
+            </tr>
+            }
+        </tbody>
+        
+    </table>
 }
 
 
 @code {
-    private List<Inventory> inventories = new List<Inventory>();
+    private List<ProductInventory> productInventories = new List<ProductInventory>();
 
     private void OnSelectInventory(Inventory inventory)
     {
-        if (!inventories.Any(x => x.InventoryName.Equals(inventory.InventoryName, StringComparison.OrdinalIgnoreCase))){
-            inventories.Add(inventory);
+        if (!productInventories.Any(x => x.Inventory.InventoryName.Equals(inventory.InventoryName, StringComparison.OrdinalIgnoreCase)))
+        {
+            productInventories.Add(new ProductInventory { InventoryId = inventory.InventoryId, Inventory = inventory });
         }
     }
 
-    private void RemoveItem(Inventory row){
-        inventories.Remove(row);
+    private void RemoveItem(ProductInventory row){
+        productInventories.Remove(row);
     }
 }

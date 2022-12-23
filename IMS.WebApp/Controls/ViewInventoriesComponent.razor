@@ -14,7 +14,7 @@
     
 @if (this.DisplaySearchResult && _inventories != null && selectedInventory == null)
 {
-    <div>
+    <div style="overflow-y:auto; max-height:300px; border: 1px solid silver;">
         <ul style="list-style-type:none">
             @foreach (var inv in _inventories)
             {
