@@ -23,7 +23,9 @@
         <tbody>
             @foreach (var row in listProducts)
             {
-                <ProductItemComponent item="row"></ProductItemComponent>
+                <ProductItemComponent 
+                    item="row"
+                    OnProductDeleted="OnProductDeleted"></ProductItemComponent>
             }
         </tbody>
     </table>
@@ -39,7 +41,7 @@
 
     protected override async Task OnInitializedAsync()
     {
-        this.listProducts = (await ViewProductsByNameUseCase.ExecuteAsync()).ToList();
+        await LoadProducts();
     }
 
     private void OnSearchProducts(List<Product> products)
@@ -52,5 +54,13 @@
         NavigationManager.NavigateTo("/addproduct");
     }
 
+    public async Task OnProductDeleted()
+    {
+        await LoadProducts();
+    }
 
+    public async Task LoadProducts()
+    {
+        this.listProducts = (await ViewProductsByNameUseCase.ExecuteAsync()).ToList();
+    }
 }

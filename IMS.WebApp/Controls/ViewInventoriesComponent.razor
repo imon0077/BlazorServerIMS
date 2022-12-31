@@ -4,7 +4,8 @@
     <input type="text" 
         class="form-control form-control-lg" 
         placeholder="Type inventory name here to search"
-           @bind-value="inventoryNameToSearch" />
+           @bind-value="inventoryNameToSearch"
+           @bind-value:event="oninput"/>
 
     <button type="button" class="input-group-text btn-danger"
             @onclick="@( async()=> { await ViewInventories(); } )">
@@ -26,7 +27,20 @@
 }
 
 @code {
-    private string inventoryNameToSearch = string.Empty;
+    private string _inventoryNameToSearch = string.Empty;
+    public string inventoryNameToSearch 
+    { 
+        get => _inventoryNameToSearch; 
+        set{
+            _inventoryNameToSearch = value;
+            if (!string.IsNullOrWhiteSpace(_inventoryNameToSearch) && 
+                _inventoryNameToSearch.Length > 2)
+            {
+                ViewInventories();
+            }
+        }
+    }
+
     private List<Inventory> _inventories = new List<Inventory>();
     private Inventory? selectedInventory;
 
@@ -46,6 +60,8 @@
         await OnSearchInventories.InvokeAsync(inventories);
         _inventories = inventories;
         this.selectedInventory = null;
+
+        StateHasChanged();
     }
 
     private async Task SelectInventory(Inventory inventory){
