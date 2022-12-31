@@ -45,7 +45,8 @@
     [Parameter]
     public EventCallback<List<ProductInventory>> OnInventorySelected { get; set; }
 
-    public List<ProductInventory> productInventories = new List<ProductInventory>();
+    [Parameter]
+    public List<ProductInventory> productInventories { get; set; } = new List<ProductInventory>();
 
     private async Task OnInventoryQtyChanged(){
         await OnInventorySelected.InvokeAsync(this.productInventories);
